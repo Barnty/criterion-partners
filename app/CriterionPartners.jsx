@@ -33,7 +33,7 @@ const SERVICES = [
 const PRICING = [
   {
     name: "Foundation",
-    price: "$2,500",
+    price: "$1,500",
     period: "starting from",
     desc: "For candidates who need to build 2-3 specific criteria",
     features: ["Profile gap analysis", "3 services of your choice", "USCIS criteria mapping", "30-day email support", "1 strategy session"],
@@ -42,7 +42,7 @@ const PRICING = [
   },
   {
     name: "Accelerator",
-    price: "$5,500",
+    price: "$3,500",
     period: "starting from",
     desc: "Full profile building for petition-ready candidates",
     features: ["Comprehensive EB-1A assessment", "6 services of your choice", "USCIS criteria mapping & evidence plan", "90-day priority support", "3 strategy sessions", "12-month action roadmap", "Letter of recommendation drafting"],
@@ -51,7 +51,7 @@ const PRICING = [
   },
   {
     name: "Extraordinary",
-    price: "$12,000",
+    price: "$8,000",
     period: "starting from",
     desc: "End-to-end concierge service — we build your entire profile",
     features: ["All 14 services included", "Dedicated profile strategist", "Full petition evidence package", "12-month unlimited support", "Weekly strategy sessions", "Media & press placement", "Citation enhancement program", "Priority processing"],
@@ -388,7 +388,7 @@ export default function CriterionPartners() {
             Criterion <span style={{ color: "#5aad72" }}>Partners</span>
           </div>
           <div style={{ display: "flex", gap: "24px", alignItems: "center" }}>
-            {[["Services", "services"], ["Process", "process"], ["Pricing", "pricing"], ["FAQ", "faq"]].map(([label, id]) => (
+            {[["Services", "services"], ["Process", "process"], ["Pricing", "pricing"], ["FAQ", "faq"], ["Contact", "contact"]].map(([label, id]) => (
               <button key={id} onClick={() => scrollTo(id)} style={{ background: "none", border: "none", color: "#7a9e8a", fontSize: "13px", cursor: "pointer", fontFamily: "inherit", fontWeight: 500 }}>{label}</button>
             ))}
             <button onClick={() => setShowIntake(true)} className="cta-btn" style={{ padding: "8px 20px", background: "linear-gradient(135deg, #3d8b55, #5aad72)", border: "none", borderRadius: "6px", color: "#fff", fontSize: "12px", cursor: "pointer", fontWeight: 700, fontFamily: "inherit", letterSpacing: "0.3px" }}>Free Assessment</button>
@@ -560,25 +560,89 @@ export default function CriterionPartners() {
         </div>
       </section>
 
-      {/* ── CTA ── */}
-      <section style={{ padding: "100px 24px", textAlign: "center", background: "radial-gradient(ellipse at 50% 50%, rgba(90,173,114,0.06) 0%, transparent 60%), #060e09" }}>
-        <div style={{ maxWidth: "600px", margin: "0 auto" }}>
-          <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(28px, 5vw, 42px)", fontWeight: 700, color: "#e8f5ec", marginBottom: "16px" }}>Ready to Build Your Extraordinary Profile?</h2>
-          <p style={{ color: "#7a9e8a", fontSize: "16px", marginBottom: "32px", lineHeight: 1.6 }}>Start with a free AI-powered assessment. See exactly where you stand and what it takes to get petition-ready.</p>
-          <button onClick={() => setShowIntake(true)} className="cta-btn" style={{ padding: "18px 48px", background: "linear-gradient(135deg, #3d8b55, #5aad72)", border: "none", borderRadius: "8px", color: "#fff", fontSize: "16px", cursor: "pointer", fontWeight: 700, fontFamily: "inherit", letterSpacing: "0.3px" }}>
-            Get Your Free Assessment →
-          </button>
+      {/* ── CONTACT ── */}
+      <section id="contact" style={{ padding: "100px 24px", background: "radial-gradient(ellipse at 50% 50%, rgba(90,173,114,0.06) 0%, transparent 60%), linear-gradient(180deg, #060e09, #0a1610)" }}>
+        <div style={{ maxWidth: "900px", margin: "0 auto" }}>
+          <div style={{ textAlign: "center", marginBottom: "56px" }}>
+            <div style={{ fontSize: "10px", fontWeight: 700, color: "#5aad72", letterSpacing: "2.5px", textTransform: "uppercase", marginBottom: "12px" }}>Get In Touch</div>
+            <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(28px, 5vw, 42px)", fontWeight: 700, color: "#e8f5ec", marginBottom: "12px" }}>Ready to Build Your Extraordinary Profile?</h2>
+            <p style={{ color: "#5a7a64", fontSize: "15px", maxWidth: "520px", marginInline: "auto", lineHeight: 1.6 }}>Start with a free consultation. We'll assess your profile and map the fastest path to your EB-1A petition.</p>
+          </div>
+
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))", gap: "20px", marginBottom: "48px" }}>
+            {/* Email Card */}
+            <a href="mailto:hello@criterionpartners.net" style={{ textDecoration: "none" }}>
+              <div className="card-hover" style={{ padding: "32px 24px", borderRadius: "14px", border: "1px solid rgba(180,215,195,0.08)", background: "rgba(10,22,16,0.5)", textAlign: "center", cursor: "pointer" }}>
+                <div style={{ width: "56px", height: "56px", borderRadius: "50%", background: "rgba(90,173,114,0.1)", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 16px", fontSize: "24px" }}>✉️</div>
+                <div style={{ fontSize: "13px", fontWeight: 700, color: "#e8f5ec", marginBottom: "6px" }}>Email Us</div>
+                <div style={{ fontSize: "14px", color: "#5aad72", wordBreak: "break-all" }}>hello@criterionpartners.net</div>
+                <div style={{ fontSize: "12px", color: "#5a7a64", marginTop: "8px" }}>We respond within 24 hours</div>
+              </div>
+            </a>
+
+            {/* WhatsApp Card */}
+            <a href="https://wa.me/2349031745766?text=Hi%20Criterion%20Partners%2C%20I%27m%20interested%20in%20EB-1A%20profile%20building." target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none" }}>
+              <div className="card-hover" style={{ padding: "32px 24px", borderRadius: "14px", border: "1px solid rgba(180,215,195,0.08)", background: "rgba(10,22,16,0.5)", textAlign: "center", cursor: "pointer" }}>
+                <div style={{ width: "56px", height: "56px", borderRadius: "50%", background: "rgba(37,211,102,0.1)", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 16px", fontSize: "24px" }}>💬</div>
+                <div style={{ fontSize: "13px", fontWeight: 700, color: "#e8f5ec", marginBottom: "6px" }}>WhatsApp</div>
+                <div style={{ fontSize: "14px", color: "#25d366" }}>+234 903 174 5766</div>
+                <div style={{ fontSize: "12px", color: "#5a7a64", marginTop: "8px" }}>Quick response on WhatsApp</div>
+              </div>
+            </a>
+
+            {/* Free Assessment Card */}
+            <div onClick={() => setShowIntake(true)} style={{ cursor: "pointer" }}>
+              <div className="card-hover" style={{ padding: "32px 24px", borderRadius: "14px", border: "1px solid rgba(90,173,114,0.2)", background: "rgba(90,173,114,0.06)", textAlign: "center" }}>
+                <div style={{ width: "56px", height: "56px", borderRadius: "50%", background: "rgba(90,173,114,0.15)", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 16px", fontSize: "24px" }}>🚀</div>
+                <div style={{ fontSize: "13px", fontWeight: 700, color: "#e8f5ec", marginBottom: "6px" }}>Free Assessment</div>
+                <div style={{ fontSize: "14px", color: "#5aad72" }}>AI-Powered Profile Analysis</div>
+                <div style={{ fontSize: "12px", color: "#5a7a64", marginTop: "8px" }}>Get your report in 2 minutes</div>
+              </div>
+            </div>
+          </div>
+
+          {/* WhatsApp Floating Button */}
+          <div style={{ textAlign: "center" }}>
+            <a href="https://wa.me/2349031745766?text=Hi%20Criterion%20Partners%2C%20I%27m%20interested%20in%20EB-1A%20profile%20building." target="_blank" rel="noopener noreferrer" className="cta-btn" style={{ display: "inline-flex", alignItems: "center", gap: "10px", padding: "16px 36px", background: "linear-gradient(135deg, #3d8b55, #5aad72)", border: "none", borderRadius: "8px", color: "#fff", fontSize: "15px", cursor: "pointer", fontWeight: 700, fontFamily: "inherit", textDecoration: "none" }}>
+              💬 Chat With Us on WhatsApp
+            </a>
+          </div>
         </div>
       </section>
 
       {/* ── FOOTER ── */}
-      <footer style={{ padding: "40px 24px", borderTop: "1px solid rgba(180,215,195,0.06)", background: "#060e09" }}>
-        <div style={{ maxWidth: "1100px", margin: "0 auto", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "16px" }}>
-          <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "20px", fontWeight: 700, color: "#3d6b4a" }}>
-            Criterion <span style={{ color: "#5aad72" }}>Partners</span>
+      <footer style={{ padding: "48px 24px 32px", borderTop: "1px solid rgba(180,215,195,0.06)", background: "#060e09" }}>
+        <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "32px", marginBottom: "32px" }}>
+            {/* Brand */}
+            <div>
+              <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "22px", fontWeight: 700, color: "#e8f5ec", marginBottom: "12px" }}>
+                Criterion <span style={{ color: "#5aad72" }}>Partners</span>
+              </div>
+              <p style={{ fontSize: "13px", color: "#5a7a64", lineHeight: 1.6 }}>Strategic profile building for EB-1A extraordinary ability green card petitions.</p>
+            </div>
+            {/* Quick Links */}
+            <div>
+              <div style={{ fontSize: "11px", fontWeight: 700, color: "#5aad72", letterSpacing: "1.5px", textTransform: "uppercase", marginBottom: "14px" }}>Quick Links</div>
+              {[["Services", "services"], ["Process", "process"], ["Pricing", "pricing"], ["FAQ", "faq"], ["Contact", "contact"]].map(([label, id]) => (
+                <div key={id} style={{ marginBottom: "8px" }}>
+                  <button onClick={() => scrollTo(id)} style={{ background: "none", border: "none", color: "#7a9e8a", fontSize: "13px", cursor: "pointer", fontFamily: "inherit", padding: 0 }}>{label}</button>
+                </div>
+              ))}
+            </div>
+            {/* Contact Info */}
+            <div>
+              <div style={{ fontSize: "11px", fontWeight: 700, color: "#5aad72", letterSpacing: "1.5px", textTransform: "uppercase", marginBottom: "14px" }}>Contact</div>
+              <div style={{ fontSize: "13px", color: "#7a9e8a", marginBottom: "8px" }}>✉️ hello@criterionpartners.net</div>
+              <div style={{ fontSize: "13px", color: "#7a9e8a", marginBottom: "8px" }}>💬 +234 903 174 5766</div>
+              <a href="https://wa.me/2349031745766" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", marginTop: "8px", padding: "8px 16px", background: "rgba(37,211,102,0.1)", border: "1px solid rgba(37,211,102,0.2)", borderRadius: "6px", color: "#25d366", fontSize: "12px", textDecoration: "none", fontWeight: 600 }}>
+                Chat on WhatsApp
+              </a>
+            </div>
           </div>
-          <div style={{ fontSize: "12px", color: "#2a4a34" }}>
-            © 2026 Criterion Partners. Profile building consultancy. Not a law firm.
+          <div style={{ borderTop: "1px solid rgba(180,215,195,0.06)", paddingTop: "20px", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "12px" }}>
+            <div style={{ fontSize: "12px", color: "#2a4a34" }}>© 2026 Criterion Partners. All rights reserved.</div>
+            <div style={{ fontSize: "11px", color: "#2a4a34" }}>Profile building consultancy. Not a law firm. Not legal advice.</div>
           </div>
         </div>
       </footer>
