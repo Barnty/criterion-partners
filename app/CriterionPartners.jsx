@@ -90,7 +90,7 @@ const FIELDS = [
   "Arts / Design", "Environmental Science", "Other",
 ];
 
-const INTAKE_STEPS = ["Profile", "Academic", "Criteria", "Services", "Details", "Report"];
+const INTAKE_STEPS = ["Profile", "Academic", "Criteria", "Services", "Details", "Done"];
 
 function IntakeApp({ onClose }) {
   const [step, setStep] = useState(0);
@@ -127,35 +127,42 @@ function IntakeApp({ onClose }) {
     return true;
   };
 
-  const generate = async () => {
+  const generate = () => {
     setLoading(true); setError("");
     try {
       const cd = form.selectedCriteria.map((c) => {
         const cr = USCIS_CRITERIA.find((x) => x.id === c);
-        return `- ${cr.label}: ${form[`${c}_detail`] || "No details"}`;
+        return `• ${cr.label}: ${form[`${c}_detail`] || "No details provided"}`;
       }).join("\n");
       const sv = form.selectedServices.map((s) => SERVICES.find((x) => x.id === s)?.label).join(", ");
 
-      const prompt = `You are a senior EB-1A immigration profile strategist at Criterion Partners. Generate a COMPREHENSIVE professional assessment.
+      const summary = `🔔 NEW EB-1A ASSESSMENT REQUEST
 
-CLIENT: ${form.name} | ${form.currentRole} at ${form.institution || "N/A"} | ${form.field} | ${form.yearsExperience || "N/A"} years
-ACADEMIC: ${form.highestDegree} in ${form.degreeField || "N/A"} from ${form.degreeInstitution || "N/A"} | Pubs: ${form.publications || "N/A"} | H-index: ${form.hIndex || "N/A"} | Citations: ${form.citations || "N/A"} | Conferences: ${form.conferences || "N/A"} | Patents: ${form.patents || "N/A"} | Grants: ${form.grants || "N/A"}
-VISA: ${form.currentVisaStatus || "N/A"} | Nationality: ${form.nationality || "N/A"}
-CRITERIA (${cc}/10): ${cd}
-SERVICES: ${sv}
-TIMELINE: ${form.targetTimeline || "N/A"} | URGENCY: ${form.urgency || "N/A"}
-NOTES: ${form.additionalNotes || "None"}
+👤 *Client:* ${form.name}
+📧 *Email:* ${form.email || "Not provided"}
+🌍 *Nationality:* ${form.nationality || "N/A"}
+🛂 *Visa Status:* ${form.currentVisaStatus || "N/A"}
+💼 *Role:* ${form.currentRole} at ${form.institution || "N/A"}
+🎓 *Field:* ${form.field}
+📅 *Experience:* ${form.yearsExperience || "N/A"} years
 
-Generate: 1) Executive Summary 2) Criteria Strength Analysis (each criterion: Strong/Moderate/Weak + actions needed) 3) Profile Gaps & how services fill them 4) 12-Month Phased Roadmap (Phase 1: months 1-3, Phase 2: 3-6, Phase 3: 6-12) 5) Services Prioritization 6) Risk Factors 7) Estimated Timeline to Petition-Ready. Be specific to their field. Reference real journals, orgs, conferences.`;
+📚 *Academic:*
+Degree: ${form.highestDegree} in ${form.degreeField || "N/A"} from ${form.degreeInstitution || "N/A"}
+Publications: ${form.publications || "N/A"} | H-index: ${form.hIndex || "N/A"} | Citations: ${form.citations || "N/A"}
+Conferences: ${form.conferences || "N/A"} | Patents: ${form.patents || "N/A"} | Grants: ${form.grants || "N/A"}
 
-      const res = await fetch("https://api.anthropic.com/v1/messages", {
-        method: "POST", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ model: "claude-sonnet-4-20250514", max_tokens: 1000, messages: [{ role: "user", content: prompt }] }),
-      });
-      const data = await res.json();
-      const text = data.content?.map((i) => i.type === "text" ? i.text : "").filter(Boolean).join("\n");
-      if (text) { setDraft(text); setStep(5); } else setError("Generation failed. Try again.");
-    } catch { setError("Failed. Please try again."); }
+📋 *EB-1A Criteria (${cc}/10):*
+${cd}
+
+🛠️ *Services Requested:* ${sv}
+
+⏱️ *Timeline:* ${form.targetTimeline || "N/A"}
+🚨 *Urgency:* ${form.urgency || "N/A"}
+📝 *Notes:* ${form.additionalNotes || "None"}`;
+
+      setDraft(summary);
+      setStep(5);
+    } catch { setError("Something went wrong. Please try again."); }
     setLoading(false);
   };
 
@@ -322,14 +329,36 @@ Generate: 1) Executive Summary 2) Criteria Strength Analysis (each criterion: St
           </div>
         )}
 
-        {/* Step 5: Report */}
+        {/* Step 5: Success */}
         {step === 5 && (
-          <div>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px", flexWrap: "wrap", gap: "8px" }}>
-              <h3 style={{ margin: 0, fontSize: "20px", color: "#e8f5ec", fontFamily: "'Cormorant Garamond', serif", fontWeight: 700 }}>Your EB-1A Assessment</h3>
-              <button onClick={() => { navigator.clipboard.writeText(draft); setCopied(true); setTimeout(() => setCopied(false), 2000); }} style={{ padding: "7px 16px", background: copied ? "rgba(34,197,94,0.15)" : "rgba(90,173,114,0.1)", border: copied ? "1.5px solid #22c55e" : "1.5px solid rgba(90,173,114,0.3)", borderRadius: "6px", color: copied ? "#22c55e" : "#5aad72", fontSize: "11px", cursor: "pointer", fontWeight: 700, fontFamily: "inherit" }}>{copied ? "Copied!" : "Copy"}</button>
+          <div style={{ textAlign: "center" }}>
+            <div style={{ width: "64px", height: "64px", borderRadius: "50%", background: "rgba(90,173,114,0.15)", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 20px", fontSize: "32px" }}>✅</div>
+            <h3 style={{ margin: "0 0 8px 0", fontSize: "22px", color: "#e8f5ec", fontFamily: "'Cormorant Garamond', serif", fontWeight: 700 }}>Assessment Submitted!</h3>
+            <p style={{ color: "#7a9e8a", fontSize: "14px", lineHeight: 1.6, marginBottom: "24px" }}>
+              Thank you, {form.name}. Your EB-1A profile has been received. Our team will review your {cc} criteria and prepare a personalized strategy within 24 hours.
+            </p>
+
+            <div style={{ background: "rgba(0,0,0,0.25)", borderRadius: "10px", padding: "20px", border: "1px solid rgba(180,215,195,0.08)", marginBottom: "20px", textAlign: "left" }}>
+              <div style={{ fontSize: "10px", fontWeight: 700, color: "#5aad72", letterSpacing: "1.2px", textTransform: "uppercase", marginBottom: "12px" }}>Your Summary</div>
+              <div style={{ fontSize: "13px", color: "#9abda6", lineHeight: 1.8 }}>
+                <div>👤 {form.name} — {form.currentRole}</div>
+                <div>🎓 {form.field} · {form.highestDegree}</div>
+                <div>📋 {cc} EB-1A criteria identified</div>
+                <div>🛠️ {form.selectedServices.length} services requested</div>
+                <div>⏱️ Timeline: {form.targetTimeline || "Flexible"}</div>
+              </div>
             </div>
-            <div style={{ background: "rgba(0,0,0,0.3)", borderRadius: "8px", border: "1px solid rgba(180,215,195,0.06)", padding: "20px", maxHeight: "350px", overflowY: "auto", fontSize: "13px", lineHeight: 1.7, whiteSpace: "pre-wrap", color: "#b8dcc4" }}>{draft}</div>
+
+            <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+              <a href={`https://wa.me/2349031745766?text=${encodeURIComponent(`Hi Criterion Partners, I just submitted my EB-1A assessment on your website.\n\nName: ${form.name}\nField: ${form.field}\nCriteria: ${cc}/10\nServices: ${form.selectedServices.length} selected\n\nLooking forward to my strategy session!`)}`} target="_blank" rel="noopener noreferrer" style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "8px", padding: "14px", background: "linear-gradient(135deg, #1a7e34, #25d366)", border: "none", borderRadius: "8px", color: "#fff", fontSize: "14px", cursor: "pointer", fontWeight: 700, fontFamily: "inherit", textDecoration: "none" }}>
+                💬 Chat With Us on WhatsApp — Get Faster Response
+              </a>
+              <a href={`mailto:hello@criterionpartners.net?subject=EB-1A Assessment - ${form.name}&body=${encodeURIComponent(`Hi Criterion Partners,\n\nI just submitted my EB-1A assessment on your website.\n\nName: ${form.name}\nRole: ${form.currentRole}\nField: ${form.field}\nCriteria: ${cc}/10\nServices requested: ${form.selectedServices.length}\nTimeline: ${form.targetTimeline || "Flexible"}\n\nLooking forward to hearing from you.`)}`} style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "8px", padding: "14px", background: "rgba(90,173,114,0.1)", border: "1.5px solid rgba(90,173,114,0.25)", borderRadius: "8px", color: "#5aad72", fontSize: "14px", cursor: "pointer", fontWeight: 600, fontFamily: "inherit", textDecoration: "none" }}>
+                ✉️ Or Email Us Instead
+              </a>
+            </div>
+
+            <p style={{ color: "#3a5a44", fontSize: "12px", marginTop: "16px" }}>We typically respond within 2-4 hours during business hours.</p>
           </div>
         )}
 
@@ -338,7 +367,7 @@ Generate: 1) Executive Summary 2) Criteria Strength Analysis (each criterion: St
           <div style={{ display: "flex", justifyContent: "space-between", marginTop: "24px" }}>
             {step > 0 ? <button onClick={() => setStep(step - 1)} style={{ padding: "10px 20px", background: "rgba(255,255,255,0.03)", border: "1.5px solid rgba(180,215,195,0.1)", borderRadius: "6px", color: "#7a9e8a", fontSize: "13px", cursor: "pointer", fontWeight: 600, fontFamily: "inherit" }}>← Back</button> : <div />}
             <button onClick={() => step === 4 ? generate() : setStep(step + 1)} disabled={!canGo() || loading} style={{ padding: "10px 24px", background: canGo() ? "linear-gradient(135deg, #3d8b55, #5aad72)" : "rgba(255,255,255,0.03)", border: "none", borderRadius: "6px", color: canGo() ? "#fff" : "#3a5a44", fontSize: "13px", cursor: canGo() ? "pointer" : "not-allowed", fontWeight: 700, fontFamily: "inherit", opacity: loading ? 0.7 : 1, minWidth: "130px" }}>
-              {loading ? "Generating..." : step === 4 ? "Generate Report →" : "Continue →"}
+              {loading ? "Submitting..." : step === 4 ? "Submit Assessment →" : "Continue →"}
             </button>
           </div>
         )}
