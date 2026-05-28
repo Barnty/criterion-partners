@@ -161,6 +161,9 @@ ${cd}
 📝 *Notes:* ${form.additionalNotes || "None"}`;
 
       setDraft(summary);
+      if (typeof window !== 'undefined' && window.fbq) {
+        window.fbq('track', 'Lead', { content_name: form.field, content_category: 'EB1A Assessment' });
+      }
       setStep(5);
     } catch { setError("Something went wrong. Please try again."); }
     setLoading(false);
